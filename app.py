@@ -9,41 +9,37 @@ from telegram.ext import (
     filters
 )
 
-# Logging setup
+# Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 
-# Load bot token from environment variable
+# Load bot token from environment
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-# Start command
+# /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     await update.message.reply_text(
-        f"👋 Hello {user.first_name}!
-Welcome to *QuizDrop Pro Bot*.
-Use /help to view available features.",
+        f"👋 Hello {user.first_name}!\nWelcome to *QuizDrop Pro Bot*.\nUse /help to view available features.",
         parse_mode='Markdown'
     )
 
-# Help command
+# /help command
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "🛠 Available Commands:
-"
-        "/start - Show welcome message
-"
+        "🛠 Available Commands:\n"
+        "/start - Show welcome message\n"
         "/help - Show this help menu"
     )
 
-# Generic message handler
+# Generic message echo
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    message = update.message.text
-    await update.message.reply_text(f"You said: {message}")
+    user_message = update.message.text
+    await update.message.reply_text(f"You said: {user_message}")
 
-# Main entry
+# Main function to run the bot
 if __name__ == "__main__":
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
