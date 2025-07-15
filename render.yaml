@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: quizdrop-pro
+    name: quizdrop-pro-bot
     env: python
     plan: free
     buildCommand: ""
