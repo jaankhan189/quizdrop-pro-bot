@@ -1,25 +1,16 @@
-import os
-import logging
-from flask import Flask, request
-import telegram
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
-app = Flask(__name__)
-TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
-bot = telegram.Bot(token=TOKEN)
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("👋 Welcome to QuizDrop Pro!\nSend a question and I’ll try to answer!")
 
-@app.route(f"/{TOKEN}", methods=["POST"])
-def webhook():
-    update = telegram.Update.de_json(request.get_json(force=True), bot)
-    chat_id = update.message.chat.id
-    message_text = update.message.text
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_message = update.message.text
+    await update.message.reply_text("🤖 You said:\n" + user_message)
 
-    bot.sendMessage(chat_id=chat_id, text="🤖 Auto-response: I received your message!")
+app = ApplicationBuilder().token("YOUR_BOT_API_TOKEN_HERE").build()
 
-    return "ok"
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-@app.route("/")
-def index():
-    return "QuizDrop Pro Bot is running!"
-
-if __name__ == "__main__":
-    app.run(port=5000)
+app.run_polling()
