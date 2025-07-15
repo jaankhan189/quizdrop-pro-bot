@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: quizdrop-pro
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: "python app.py"
+    envVars:
+      - key: BOT_TOKEN
+        value: 7718353497:AAF7FPXt_8jx0F7eDWIkGZe_yzlHG3fWKqs
