@@ -1,17 +1,34 @@
+# QuizDrop AI Bot 🤖
 
-# QuizDrop Pro Bot
+This Telegram bot detects quiz questions and automatically provides AI-generated answers using Gemini and ChatGPT.
 
-This is a Telegram bot built using `python-telegram-bot` v20+.
-It responds to the `/start` command and can be extended for quizzes.
+## Features
+- Detects messages containing quiz questions
+- Uses Gemini Pro API to generate answers
+- Optionally uses OpenAI ChatGPT (if API key is provided)
+- Sends answers to multiple channels and group
 
-## How to Run
-1. Upload to GitHub.
-2. Connect your repo to [Render.com](https://render.com).
-3. Set `app.py` as your entry point.
-4. Set the environment variable for your bot token (if needed).
+## Setup Instructions
 
-## Dependencies
-- python-telegram-bot v20.6
+### 1. Clone the repo or upload files
+Upload to GitHub or Replit.
 
-## Author
-QuizDrop Pro Team
+### 2. Add your secrets
+Use Replit Secrets or `.env`:
+- `OPENAI_API_KEY` (optional if using ChatGPT)
+- Bot token and Gemini are already hardcoded. Change if needed.
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the bot
+```bash
+python main.py
+```
+
+## Notes
+- Make sure your bot is admin in the channels and group.
+- Replace dummy `CHANNELS` and `GROUP_ID` if needed.
+
