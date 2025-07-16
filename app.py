@@ -1,51 +1,17 @@
-import os
-import logging
+
 from telegram import Update
-from telegram.ext import (
-    ApplicationBuilder,
-    CommandHandler,
-    MessageHandler,
-    ContextTypes,
-    filters
-)
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Enable logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
+# Define the start command handler
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text("👋 Welcome to QuizDrop Pro! I am online and ready to help you with quizzes.")
 
-# Load bot token from environment
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+# Create the application and pass your bot token here
+app = ApplicationBuilder().token("7718353497:AAFhob8xvYsvl-KiR_KCsf7aSMz0zSFZX-w").build()
 
-# /start command
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user = update.effective_user
-    await update.message.reply_text(
-        f"👋 Hello {user.first_name}!\nWelcome to *QuizDrop Pro Bot*.\nUse /help to view available features.",
-        parse_mode='Markdown'
-    )
+# Add command handlers
+app.add_handler(CommandHandler("start", start))
 
-# /help command
-async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "🛠 Available Commands:\n"
-        "/start - Show welcome message\n"
-        "/help - Show this help menu"
-    )
-
-# Generic message echo
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_message = update.message.text
-    await update.message.reply_text(f"You said: {user_message}")
-
-# Main function to run the bot
+# Run the bot
 if __name__ == "__main__":
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
-
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("help", help_command))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-
-    print("✅ Bot is running...")
     app.run_polling()
